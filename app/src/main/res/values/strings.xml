@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Timetable and Task Manager</string>
+    <string name="app_name">TimeTask</string>
     <string name="about_us">This is an application to help anyone who want to manage their time better and practice self-discipline.\n\nDeveloped by: G3</string>
+    <string name="navigation_drawer_open"></string>
+    <string name="navigation_drawer_close"></string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
