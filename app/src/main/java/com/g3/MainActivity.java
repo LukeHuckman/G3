@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    SQLHelper sqlHelper = new SettingsSQL(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +39,6 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         setupNavMenu(navController);
-
-        //Bundle bundle = new Bundle();
-        //bundle.putStringArray("settings", sqlHelper.getSettings(1).toStringArray());
-        try {
-            sqlHelper.getSettings(1);
-        } catch(android.database.CursorIndexOutOfBoundsException ex){
-            sqlHelper.initSettings();
-        }
     }
 
     @Override

@@ -70,9 +70,18 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        // TODO: Fix bug in SQLite implementation causing settings to reset.
+        /* TODO: Fix bug in SQLite implementation causing settings to reset.
+        *  For some reason the settings database gets reset every time
+        *  after leaving the settings fragment, causing initSettings()
+        *  to be called again.
+        */
 
         sqlHelper = new SettingsSQL(getActivity());
+        try {
+            sqlHelper.getSettings(1);
+        } catch(android.database.CursorIndexOutOfBoundsException ex){
+            sqlHelper.initSettings();
+        }
         settings = sqlHelper.getSettings(1);
         SwitchMaterial toggleTTNotify = view.findViewById(R.id.ToggleTTNotify);
         toggleTTNotify.setChecked(settings.getTimeNotify() == 1);
