@@ -22,5 +22,20 @@
         android:name="com.g3.AboutFragment"
         android:label="About App"
         tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.g3.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" />
+    <fragment
+        android:id="@+id/editTaskFragment"
+        android:name="com.g3.EditTaskFragment"
+        android:label="fragment_edit_task"
+        tools:layout="@layout/fragment_edit_task" />
+    <fragment
+        android:id="@+id/addTaskFragment"
+        android:name="com.g3.AddTaskFragment"
+        android:label="fragment_add_task"
+        tools:layout="@layout/fragment_add_task" />
 
 </navigation>

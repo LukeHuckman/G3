@@ -4,6 +4,11 @@
         android:id="@id/DestTimetable"
         android:icon="@drawable/ic_timetable"
         android:title="Timetable" />
+        
+    <item
+        android:id="@+id/calendarFragment"
+        android:icon="@android:drawable/btn_star"
+        android:title="Calendar" />
 
     <item
         android:id="@id/DestSettings"
