@@ -1,5 +1,11 @@
 package com.g3;
 
+/*
+* This is used in fragment/activity to retrieve and set individual values of a database record.
+* Each class except SQLRecord represents a record of a specific table and must inherit
+* from the SQLRecord class.
+*/
+
 public class SQLRecord {
     protected int id;
 

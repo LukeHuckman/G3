@@ -6,9 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.g3.SQLTables.AppSettings;
-import androidx.annotation.Nullable;
 
-public class SettingsSQL extends SQLiteOpenHelper {
+/*
+ * SQLite database implementation for SettingsFragment.
+ */
+
+public class SettingsDB extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static String DATABASE_NAME = "settings.db";
     private static final String SQL_CREATE_ENTRIES =
@@ -23,7 +26,7 @@ public class SettingsSQL extends SQLiteOpenHelper {
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + AppSettings.TABLE_NAME;
 
-    public SettingsSQL(Context context) {
+    public SettingsDB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -57,7 +60,7 @@ public class SettingsSQL extends SQLiteOpenHelper {
         return userSettings;
     }
 
-    public void initSettings() {
+    public void initSettings() { // Only called during first-time run
         ContentValues values = new ContentValues();
         values.put(AppSettings.COLUMN_ID, 1);
         values.put(AppSettings.COLUMN_TIME_NOTIFY, 0);
