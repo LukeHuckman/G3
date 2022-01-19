@@ -18,7 +18,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
-    SQLHelper sqlHelper;
+    SettingsSQL settingsSQL;
     UserSettings settings;
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,26 +70,22 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        /* TODO: Fix bug in SQLite implementation causing settings to reset.
-        *  For some reason the settings database gets reset every time
-        *  after leaving the settings fragment, causing initSettings()
-        *  to be called again.
-        */
-
-        sqlHelper = new SettingsSQL(getActivity());
-        try {
-            sqlHelper.getSettings(1);
-        } catch(android.database.CursorIndexOutOfBoundsException ex){
-            sqlHelper.initSettings();
+        settingsSQL = new SettingsSQL(this.getContext());
+        if (settings == null) {
+            try {
+                settingsSQL.getSettings(1);
+            } catch(android.database.CursorIndexOutOfBoundsException ex){
+                settingsSQL.initSettings();
+            }
+            settings = settingsSQL.getSettings(1);
         }
-        settings = sqlHelper.getSettings(1);
         SwitchMaterial toggleTTNotify = view.findViewById(R.id.ToggleTTNotify);
         toggleTTNotify.setChecked(settings.getTimeNotify() == 1);
         SwitchMaterial.OnCheckedChangeListener TTNotify = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setTimeNotify(isChecked ? 1:0);
-                sqlHelper.updateSettings(1, settings);
+                settingsSQL.updateSettings(1, settings);
             }
         };
         toggleTTNotify.setOnCheckedChangeListener(TTNotify);
@@ -100,7 +96,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setTimeAlarm(isChecked ? 1:0);
-                sqlHelper.updateSettings(1, settings);
+                settingsSQL.updateSettings(1, settings);
             }
         };
         toggleTTAlarm.setOnCheckedChangeListener(TTAlarm);
@@ -111,7 +107,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setTaskNotify(isChecked ? 1:0);
-                sqlHelper.updateSettings(1, settings);
+                settingsSQL.updateSettings(1, settings);
             }
         };
         toggleTSNotify.setOnCheckedChangeListener(TSNotify);
@@ -122,7 +118,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setTaskAlarm(isChecked ? 1:0);
-                sqlHelper.updateSettings(1, settings);
+                settingsSQL.updateSettings(1, settings);
             }
         };
         toggleTSAlarm.setOnCheckedChangeListener(TSAlarm);
@@ -133,7 +129,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setDarkMode(isChecked ? 1:0);
-                sqlHelper.updateSettings(1, settings);
+                settingsSQL.updateSettings(1, settings);
             }
         };
         toggleDarkMode.setOnCheckedChangeListener(DarkMode);

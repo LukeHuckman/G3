@@ -8,34 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.g3.SQLTables.AppSettings;
 import androidx.annotation.Nullable;
 
-public class SQLHelper extends SQLiteOpenHelper {
+public class SettingsSQL extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
-    public static String DATABASE_NAME;
-
-    public SQLHelper(Context context, String dbName, @Nullable SQLiteDatabase.CursorFactory factory, int dbVer) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-    public SQLHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {}
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
-
-    @Override
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
-
-    public UserSettings getSettings(int i) { return null; }
-    public void updateSettings(int id, UserSettings userSettings) {}
-    public void initSettings() {}
-
-}
-
-class SettingsSQL extends SQLHelper {
+    public static String DATABASE_NAME = "settings.db";
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + AppSettings.TABLE_NAME + "(" +
                     AppSettings.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -49,7 +24,7 @@ class SettingsSQL extends SQLHelper {
             "DROP TABLE IF EXISTS " + AppSettings.TABLE_NAME;
 
     public SettingsSQL(Context context) {
-        super(context, "settings.db", null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -68,7 +43,6 @@ class SettingsSQL extends SQLHelper {
         super.onDowngrade(db, oldVersion, newVersion);
     }
 
-    @Override
     public UserSettings getSettings(int i) {
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.rawQuery("select * from " + AppSettings.TABLE_NAME + " where id="+i+"", null);
@@ -83,7 +57,6 @@ class SettingsSQL extends SQLHelper {
         return userSettings;
     }
 
-    @Override
     public void initSettings() {
         ContentValues values = new ContentValues();
         values.put(AppSettings.COLUMN_ID, 1);
@@ -95,10 +68,8 @@ class SettingsSQL extends SQLHelper {
 
         SQLiteDatabase database = this.getWritableDatabase();
         database.insert(AppSettings.TABLE_NAME, null, values);
-        System.out.println("initSettings(): " + getSettings(1).toString());
     }
 
-    @Override
     public void updateSettings(int id, UserSettings userSettings) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -109,6 +80,5 @@ class SettingsSQL extends SQLHelper {
         values.put(AppSettings.COLUMN_DARK_MODE, userSettings.getDarkMode());
         database.update(AppSettings.TABLE_NAME, values, AppSettings.COLUMN_ID + " = ? " ,
                 new String[]{String.valueOf(id)});
-        System.out.println("updateSettings(): " + getSettings(id).toString());
     }
 }
