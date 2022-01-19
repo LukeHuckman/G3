@@ -18,7 +18,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
-    SettingsSQL settingsSQL;
+    SettingsDB settingsDB;
     UserSettings settings;
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,14 +70,14 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        settingsSQL = new SettingsSQL(this.getContext());
+        settingsDB = new SettingsDB(this.getContext());
         if (settings == null) {
             try {
-                settingsSQL.getSettings(1);
+                settingsDB.getSettings(1);
             } catch(android.database.CursorIndexOutOfBoundsException ex){
-                settingsSQL.initSettings();
+                settingsDB.initSettings();
             }
-            settings = settingsSQL.getSettings(1);
+            settings = settingsDB.getSettings(1);
         }
         SwitchMaterial toggleTTNotify = view.findViewById(R.id.ToggleTTNotify);
         toggleTTNotify.setChecked(settings.getTimeNotify() == 1);
@@ -85,7 +85,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setTimeNotify(isChecked ? 1:0);
-                settingsSQL.updateSettings(1, settings);
+                settingsDB.updateSettings(1, settings);
             }
         };
         toggleTTNotify.setOnCheckedChangeListener(TTNotify);
@@ -96,7 +96,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setTimeAlarm(isChecked ? 1:0);
-                settingsSQL.updateSettings(1, settings);
+                settingsDB.updateSettings(1, settings);
             }
         };
         toggleTTAlarm.setOnCheckedChangeListener(TTAlarm);
@@ -107,7 +107,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setTaskNotify(isChecked ? 1:0);
-                settingsSQL.updateSettings(1, settings);
+                settingsDB.updateSettings(1, settings);
             }
         };
         toggleTSNotify.setOnCheckedChangeListener(TSNotify);
@@ -118,7 +118,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setTaskAlarm(isChecked ? 1:0);
-                settingsSQL.updateSettings(1, settings);
+                settingsDB.updateSettings(1, settings);
             }
         };
         toggleTSAlarm.setOnCheckedChangeListener(TSAlarm);
@@ -129,7 +129,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setDarkMode(isChecked ? 1:0);
-                settingsSQL.updateSettings(1, settings);
+                settingsDB.updateSettings(1, settings);
             }
         };
         toggleDarkMode.setOnCheckedChangeListener(DarkMode);
