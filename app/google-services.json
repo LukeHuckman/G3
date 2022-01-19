@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "498665355655",
+    "project_id": "g3timetask",
+    "storage_bucket": "g3timetask.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498665355655:android:b2abb32d5aa40970c23b22",
+        "android_client_info": {
+          "package_name": "com.g3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498665355655-obr8j28d9qfmgv2hddtt37sb11p5bnhr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT8mMfDwyJtNYn7vZIbnfGJXlwttdkhBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498665355655-obr8j28d9qfmgv2hddtt37sb11p5bnhr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
