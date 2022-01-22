@@ -11,6 +11,11 @@
         android:title="Calendar" />
 
     <item
+        android:id="@+id/DestTags"
+        android:icon="@drawable/ic_bookmark"
+        android:title="Tags" />
+
+    <item
         android:id="@id/DestSettings"
         android:icon="@drawable/ic_settings"
         android:title="Settings" />
