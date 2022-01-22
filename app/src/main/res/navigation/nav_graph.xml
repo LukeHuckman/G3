@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_settings" />
 
     <fragment
+        android:id="@+id/DestTags"
+        android:name="com.g3.TagsFragment"
+        android:label="Tags List"
+        tools:layout="@layout/fragment_tags" />
+
+    <fragment
         android:id="@+id/DestAbout"
         android:name="com.g3.AboutFragment"
         android:label="About App"
