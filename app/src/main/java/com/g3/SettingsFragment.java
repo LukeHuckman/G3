@@ -3,6 +3,7 @@ package com.g3;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -18,8 +19,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
-    SettingsDB settingsDB;
-    UserSettings settings;
     // Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,16 +68,9 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        SettingsDB settingsDB = new SettingsDB(this.getContext());
+        UserSettings settings = settingsDB.getSettings(1);
 
-        settingsDB = new SettingsDB(this.getContext());
-        if (settings == null) {
-            try {
-                settingsDB.getSettings(1);
-            } catch(android.database.CursorIndexOutOfBoundsException ex){
-                settingsDB.initSettings();
-            }
-            settings = settingsDB.getSettings(1);
-        }
         SwitchMaterial toggleTTNotify = view.findViewById(R.id.ToggleTTNotify);
         toggleTTNotify.setChecked(settings.getTimeNotify() == 1);
         SwitchMaterial.OnCheckedChangeListener TTNotify = new CompoundButton.OnCheckedChangeListener() {
@@ -130,6 +122,14 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setDarkMode(isChecked ? 1:0);
                 settingsDB.updateSettings(1, settings);
+                switch(isChecked ? 1:0) {
+                    case 0:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        break;
+                    case 1:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        break;
+                }
             }
         };
         toggleDarkMode.setOnCheckedChangeListener(DarkMode);
