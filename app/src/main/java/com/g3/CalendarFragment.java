@@ -100,7 +100,16 @@ public class CalendarFragment extends Fragment {
         TextView current_view_month=getActivity().findViewById((R.id.current_view_month));
 
         int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR)+1;
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        int currentDate=Calendar.getInstance().get(Calendar.DATE);
+
+        Log.i("currentMonth", Integer.toString(currentMonth));
+        Log.i("currentYear", Integer.toString(currentYear));
+        Log.i("currentDate", Integer.toString(currentDate));
+
+        calendarView.markDate(
+                new DateData(currentYear, currentMonth, currentDate).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.BLUE))
+        );
 
         current_view_month.setText(months[currentMonth-1]);
         current_view_year.setText(" "+Integer.toString(currentYear));
@@ -153,8 +162,14 @@ public class CalendarFragment extends Fragment {
         for (int k=0; k<markData.size();k++){
             calendarView.unMarkDate((DateData) markData.get(k));
         }
+
+        calendarView.markDate(
+                new DateData(currentYear, currentMonth, currentDate).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.BLUE))
+        );
+
         for(int j=0; j<tasks.size(); j++){
             Task task=tasks.get(j);
+            Log.i("dbtasks", tasks.get(j).toString());
             //String[] datetimeArr=task.getEndDate().split(" ");
             String date=task.getEndDate();
             String time=task.getEndTime();
@@ -162,7 +177,6 @@ public class CalendarFragment extends Fragment {
             int day=Integer.parseInt(dateArr[0]);
             int month=Integer.parseInt(dateArr[1]);
             int year=Integer.parseInt(dateArr[2]);
-
 
             calendarView.markDate(
                     new DateData(year, month, day).setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND, Color.parseColor(task.getColor())))

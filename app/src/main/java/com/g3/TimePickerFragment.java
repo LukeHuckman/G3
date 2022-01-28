@@ -58,7 +58,15 @@ public class TimePickerFragment extends DialogFragment
         Log.i("settime", Integer.toString(minute));
         Log.i("settime", " "+task_start_time_tv.getHint());
         //add_task_start_time.setText("test");
-        task_start_time_tv.setText(hourOfDay+":"+minute);
+        String hourStr=Integer.toString(hourOfDay);
+        String minuteStr=Integer.toString(minute);
+        if(minute<10){
+            minuteStr="0"+minuteStr;
+        }
+        if(hourOfDay<10){
+            hourStr="0"+hourStr;
+        }
+        task_start_time_tv.setText(hourStr+":"+minuteStr);
     }
 
 

@@ -21,11 +21,14 @@ public class MainActivity extends AppCompatActivity {
     TaskAdapter taskAdapter;
     SettingsDB settingsDB;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         settingsDB = new SettingsDB(this);
-        taskAdapter=new TaskAdapter();
+        //this.deleteDatabase("settings.db");
+        taskAdapter=new TaskAdapter(settingsDB);
+
         try {
             settingsDB.getSettings(1);
         } catch(android.database.CursorIndexOutOfBoundsException ex){
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 break;
         }
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.TBMainAct);

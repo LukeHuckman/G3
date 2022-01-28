@@ -22,8 +22,12 @@ import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,10 +104,25 @@ public class AddTaskFragment extends Fragment {
         int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
 
         TextInputEditText add_task_start_date = getActivity().findViewById(R.id.add_task_start_date);
-        add_task_start_date.setText(currentDay+"-"+currentMonth+"-"+currentYear);
+        String currentDayStr = Integer.toString(currentDay);
+        String currentMonthStr = Integer.toString(currentMonth);
+        if(currentDay<10){
+            currentDayStr="0"+currentDayStr;
+        }
+        if(currentMonth<10){
+            currentMonthStr="0"+currentMonthStr;
+        }
+        add_task_start_date.setText(currentDayStr+"-"+currentMonthStr+"-"+currentYear);
         TextInputEditText add_task_start_time = getActivity().findViewById(R.id.add_task_start_time);
-        add_task_start_time.setText(currentHour+":"+currentMinute);
-        add_task_start_time.setText(currentHour+":"+currentMinute);
+        String currentHourStr = Integer.toString(currentHour);
+        String currentMinuteStr = Integer.toString(currentMinute);
+        if(currentHour<10){
+            currentHourStr="0"+currentHourStr;
+        }
+        if(currentMinute<10){
+            currentMinuteStr="0"+currentMinuteStr;
+        }
+        add_task_start_time.setText(currentHourStr+":"+currentMinuteStr);
         TextInputEditText add_task_end_date = getActivity().findViewById(R.id.add_task_end_date);
         TextInputEditText add_task_end_time = getActivity().findViewById(R.id.add_task_end_time);
 
@@ -206,6 +225,72 @@ public class AddTaskFragment extends Fragment {
                 Log.i("submit", name);
                 Log.i("submit", tags);
                 Log.i("submit", color);
+                boolean validate=true;
+
+                if(name.isEmpty()){
+                    TextInputLayout add_task_name_layout=getActivity().findViewById(R.id.add_task_name_layout);
+                    add_task_name_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+                if(tags.isEmpty()){
+                    TextInputLayout add_task_tags_layout=getActivity().findViewById(R.id.add_task_tags_layout);
+                    add_task_tags_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+                if(color.isEmpty()){
+                    TextInputLayout add_task_color_layout=getActivity().findViewById(R.id.add_task_color_layout);
+                    add_task_color_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+
+                TextInputLayout add_task_end_date_layout=getActivity().findViewById(R.id.add_task_end_date_layout);
+                TextInputLayout add_task_end_time_layout=getActivity().findViewById(R.id.add_task_end_time_layout);
+                TextInputLayout add_task_start_date_layout=getActivity().findViewById(R.id.add_task_start_date_layout);
+                TextInputLayout add_task_start_time_layout=getActivity().findViewById(R.id.add_task_start_time_layout);
+                if(start_date.isEmpty()){
+                    add_task_start_date_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+                if(start_time.isEmpty()){
+                    add_task_start_time_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+                if(end_date.isEmpty()){
+                    add_task_end_date_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+
+                if(end_time.isEmpty()){
+
+                    add_task_end_time_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+                if(!validate){
+                    return;
+                }
+                else{
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                    Date endDateTime = null;
+                    Date startDateTime = null;
+                    try {
+                        endDateTime = sdf.parse(end_date+" "+end_time);
+                        startDateTime = sdf.parse(start_date+" "+start_time);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    Calendar endDate_cal = Calendar.getInstance();
+                    Calendar startDate_cal = Calendar.getInstance();
+                    endDate_cal.setTime(endDateTime);
+                    startDate_cal.setTime(startDateTime);
+
+                    if(startDateTime.compareTo(endDateTime)>0) {
+                        //startDate is after endDate
+                        add_task_end_date_layout.setError("End date invalid.");
+                        add_task_end_time_layout.setError("End time invalid.");
+                        return;
+                    }
+                }
 
                 //submit set data
                 SettingsDB settingsDB =((MainActivity)getActivity()).getSettingsDB();
@@ -216,6 +301,10 @@ public class AddTaskFragment extends Fragment {
                 TaskAdapter taskAdapter=((MainActivity)getActivity()).getTaskAdapter();
                 //set data in task list fragment
                 taskAdapter.addTask(task);
+
+                //Tag[] tags=tags.split(",")
+                //call tag db func to add tag //if exist, add. else, null.
+
                 if (getFragmentManager().getBackStackEntryCount() != 0) {
                     //String item = "Pig";
                     //int insertIndex = 2;

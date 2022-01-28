@@ -58,8 +58,15 @@ public class DatePickerFragment extends DialogFragment
             Log.i("setmonth", Integer.toString(month));
             Log.i("setday", Integer.toString(day));
             month=month+1;
-            //add_task_start_time.setText("test");
-            add_task_start_date.setText(day+"-"+month+"-"+year);
+            String dayStr=Integer.toString(day);
+            String monthStr=Integer.toString(month);
+            if(day<10){
+                dayStr="0"+dayStr;
+            }
+            if(month<10){
+                monthStr="0"+monthStr;
+            }
+            add_task_start_date.setText(dayStr+"-"+monthStr+"-"+year);
         }
 
 

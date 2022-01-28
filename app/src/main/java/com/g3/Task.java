@@ -48,8 +48,8 @@ public class Task extends SQLRecord {
     public String toString() {
         return "id:" + this.id + "," +
                 "name:" + this.name + "," +
-                "color:"+this.color + "," +
                 "tags:" + this.tags + "," +
+                "color:"+this.color + "," +
                 "startDate" + this.startDate + "," +
                 "startTime" + this.endTime + "," +
                 "endDate" + this.endDate + "," +
@@ -57,7 +57,7 @@ public class Task extends SQLRecord {
     }
 
     public String[] toStringArray() {
-        return new String[]{"id", "name", "color", "tags", "startDate", "startTime", "endDate", "endTime"};
+        return new String[]{"id", "name", "tags", "color", "startDate", "startTime", "endDate", "endTime"};
     }
 
     public void editTask(String name, String tags, String color, String startDate, String startTime, String endDate, String endTime){
