@@ -22,6 +22,12 @@ import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import sun.bob.mcalendarview.MarkStyle;
 import sun.bob.mcalendarview.views.ExpCalendarView;
@@ -226,13 +232,78 @@ public class EditTaskFragment extends Fragment {
                 String end_date=edit_task_end_date.getEditableText().toString();
                 String end_time=edit_task_end_time.getEditableText().toString();
 
+                boolean validate=true;
 
+                if(name.isEmpty()){
+                    TextInputLayout edit_task_name_layout=getActivity().findViewById(R.id.edit_task_name_layout);
+                    edit_task_name_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+                if(tags.isEmpty()){
+                    TextInputLayout edit_task_tags_layout=getActivity().findViewById(R.id.edit_task_tags_layout);
+                    edit_task_tags_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+                if(color.isEmpty()){
+                    TextInputLayout edit_task_color_layout=getActivity().findViewById(R.id.edit_task_color_layout);
+                    edit_task_color_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
 
+                TextInputLayout edit_task_start_date_layout=getActivity().findViewById(R.id.edit_task_start_date_layout);
+                TextInputLayout edit_task_start_time_layout=getActivity().findViewById(R.id.edit_task_start_time_layout);
+                TextInputLayout edit_task_end_date_layout=getActivity().findViewById(R.id.edit_task_end_date_layout);
+                TextInputLayout edit_task_end_time_layout=getActivity().findViewById(R.id.edit_task_end_time_layout);
+                if(start_date.isEmpty()){
+
+                    edit_task_start_date_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+                if(start_time.isEmpty()){
+
+                    edit_task_start_time_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+                if(end_date.isEmpty()){
+
+                    edit_task_end_date_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+                if(end_time.isEmpty()){
+
+                    edit_task_end_time_layout.setError("This field cannot be empty.");
+                    validate=false;
+                }
+                if(!validate){
+                    return;
+                }
+                else{
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+                    Date endDateTime = null;
+                    Date startDateTime = null;
+                    try {
+                        endDateTime = sdf.parse(end_date+" "+end_time);
+                        startDateTime = sdf.parse(start_date+" "+start_time);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    Calendar endDate_cal = Calendar.getInstance();
+                    Calendar startDate_cal = Calendar.getInstance();
+                    endDate_cal.setTime(endDateTime);
+                    startDate_cal.setTime(startDateTime);
+
+                    if(startDateTime.compareTo(endDateTime)>0) {
+                        //startDate is after endDate
+                        edit_task_end_date_layout.setError("End date invalid.");
+                        edit_task_end_time_layout.setError("End time invalid.");
+                        return;
+                    }
+                }
                 //submit set data
                 //set data in task list fragment
                 //back to task list fragment //update task list onresume
                 SettingsDB settingsDB =((MainActivity)getActivity()).getSettingsDB();
-
 
                 TaskAdapter taskAdapter=((MainActivity)getActivity()).getTaskAdapter();
                 //set data in task list fragment
@@ -259,6 +330,22 @@ public class EditTaskFragment extends Fragment {
                 }
             }
         });
+
+        FloatingActionButton delete_task_btn = view.findViewById(R.id.delete_task_btn);
+        delete_task_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SettingsDB settingsDB =((MainActivity)getActivity()).getSettingsDB();
+                TaskAdapter taskAdapter=((MainActivity)getActivity()).getTaskAdapter();
+
+                settingsDB.deleteTask(taskId);
+                taskAdapter.deleteTask(taskId);
+                if (getFragmentManager().getBackStackEntryCount() != 0) {
+                    getFragmentManager().popBackStack();
+                }
+            }
+        });
+
     }
 
     @Override

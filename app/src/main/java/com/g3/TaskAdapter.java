@@ -27,6 +27,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public TaskAdapter(){
         this.tasks=new ArrayList<>();
     }
+    public TaskAdapter(SettingsDB db){
+        this.tasks=db.getTasks();
+    }
 
     // Usually involves inflating a layout from XML and returning the holder
     @Override
@@ -88,6 +91,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             }
         }
         return null;
+    }
+
+    public void deleteTask(int id){
+        for(int i=0; i<tasks.size(); i++){
+            if(tasks.get(i).getId()==id){
+                tasks.remove(i);
+            }
+        }
     }
 
     public List<Task> getTasks(){

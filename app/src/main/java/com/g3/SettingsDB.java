@@ -9,6 +9,9 @@ import android.util.Log;
 
 import com.g3.SQLTables.AppSettings;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * SQLite database implementation for SettingsFragment.
  */
@@ -77,20 +80,43 @@ public class SettingsDB extends SQLiteOpenHelper {
         return userSettings;
     }
 
-    public Task getTasks(int i){
+    public Task getTask(int i){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.rawQuery("select * from task where id="+i, null);
         cursor.moveToFirst();
         Task task = new Task();
         task.setId(cursor.getInt(0));
         task.setName(cursor.getString(1));
-        task.setColor(cursor.getString(2));
-        task.setTags(cursor.getString(3));
+        task.setTags(cursor.getString(2));
+        task.setColor(cursor.getString(3));
         task.setStartDate(cursor.getString(4));
         task.setStartTime(cursor.getString(5));
         task.setEndDate(cursor.getString(6));
         task.setEndTime(cursor.getString(7));
         return task;
+    }
+
+    public List<Task> getTasks(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select * from task", null);
+        List<Task> tasks=new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            while (cursor.moveToNext()) {
+                Task temp = new Task(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getString(7)
+                        );
+                tasks.add(temp);
+            }
+        }
+        cursor.close();
+        return tasks;
     }
 
     public void initSettings() { // Only called during first-time run
@@ -145,5 +171,11 @@ public class SettingsDB extends SQLiteOpenHelper {
 
         database.update("task", values, "id = ? " ,
                 new String[]{String.valueOf(id)});
+    }
+
+    public void deleteTask(int id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        database.delete("task", "id = ? ", new String[]{String.valueOf(id)});
     }
 }
