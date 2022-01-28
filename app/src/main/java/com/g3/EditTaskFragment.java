@@ -23,6 +23,10 @@ import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import sun.bob.mcalendarview.MarkStyle;
+import sun.bob.mcalendarview.views.ExpCalendarView;
+import sun.bob.mcalendarview.vo.DateData;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link EditTaskFragment#newInstance} factory method to
@@ -99,13 +103,15 @@ public class EditTaskFragment extends Fragment {
         }
 
         //set data gotten from db
-        taskName="get name";
-        taskTags="get tags";
-        taskColor="#FF974242";
-        taskStartDate="get start date";
-        taskStartTime="get start time";
-        taskEndDate="get send date";
-        taskEndTime="get end time";
+        TaskAdapter taskAdapter=((MainActivity)getActivity()).getTaskAdapter();
+        Task task=taskAdapter.getTask(taskId);
+        taskName=task.getName();
+        taskTags=task.getTags();
+        taskColor=task.getColor();
+        taskStartDate=task.getStartDate();
+        taskStartTime=task.getStartTime();
+        taskEndDate=task.getEndDate();
+        taskEndTime=task.getEndTime();
 
         //set init value to text input
         TextInputEditText edit_task_name=view.findViewById(R.id.edit_task_name);
@@ -220,14 +226,37 @@ public class EditTaskFragment extends Fragment {
                 String end_date=edit_task_end_date.getEditableText().toString();
                 String end_time=edit_task_end_time.getEditableText().toString();
 
-                Log.i("submit", Integer.toString(taskId));
-                Log.i("submit", name);
-                Log.i("submit", tags);
-                Log.i("submit", color);
+
 
                 //submit set data
                 //set data in task list fragment
                 //back to task list fragment //update task list onresume
+                SettingsDB settingsDB =((MainActivity)getActivity()).getSettingsDB();
+
+
+                TaskAdapter taskAdapter=((MainActivity)getActivity()).getTaskAdapter();
+                //set data in task list fragment
+                Task task=taskAdapter.getTask(taskId);
+                task.editTask(name, tags, color, start_date, start_time, end_date, end_time);
+                settingsDB.updateTask(taskId, task);
+                taskAdapter.updateTasks(taskId, task);
+
+                String date=end_date;
+                String[] dateArr=date.split("-");
+                int day=Integer.parseInt(dateArr[0]);
+                int month=Integer.parseInt(dateArr[1]);
+                int year=Integer.parseInt(dateArr[2]);
+                Log.i("submit", Integer.toString(taskId));
+                Log.i("editday", Integer.toString(day));
+                Log.i("editmonth", Integer.toString(month));
+                Log.i("edityear", Integer.toString(year));
+
+                if (getFragmentManager().getBackStackEntryCount() != 0) {
+                    //String item = "Pig";
+                    //int insertIndex = 2;
+
+                    getFragmentManager().popBackStack();
+                }
             }
         });
     }

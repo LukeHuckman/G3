@@ -78,5 +78,5 @@ class UserSettings extends SQLRecord {
                 SQLTables.AppSettings.COLUMN_TASK_ALARM,
                 SQLTables.AppSettings.COLUMN_DARK_MODE};
     }
-
 }
+

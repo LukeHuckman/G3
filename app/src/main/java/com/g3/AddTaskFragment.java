@@ -103,6 +103,7 @@ public class AddTaskFragment extends Fragment {
         add_task_start_date.setText(currentDay+"-"+currentMonth+"-"+currentYear);
         TextInputEditText add_task_start_time = getActivity().findViewById(R.id.add_task_start_time);
         add_task_start_time.setText(currentHour+":"+currentMinute);
+        add_task_start_time.setText(currentHour+":"+currentMinute);
         TextInputEditText add_task_end_date = getActivity().findViewById(R.id.add_task_end_date);
         TextInputEditText add_task_end_time = getActivity().findViewById(R.id.add_task_end_time);
 
@@ -207,8 +208,20 @@ public class AddTaskFragment extends Fragment {
                 Log.i("submit", color);
 
                 //submit set data
+                SettingsDB settingsDB =((MainActivity)getActivity()).getSettingsDB();
+                Task task = new Task(
+                        0, name, tags, color, start_date, start_time, end_date,  end_time
+                );
+                settingsDB.addTask(task);
+                TaskAdapter taskAdapter=((MainActivity)getActivity()).getTaskAdapter();
                 //set data in task list fragment
-                //back to task list fragment //update task list onresume
+                taskAdapter.addTask(task);
+                if (getFragmentManager().getBackStackEntryCount() != 0) {
+                    //String item = "Pig";
+                    //int insertIndex = 2;
+
+                    getFragmentManager().popBackStack();
+                }
             }
         });
 
