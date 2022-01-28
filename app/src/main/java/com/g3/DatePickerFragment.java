@@ -54,11 +54,12 @@ public class DatePickerFragment extends DialogFragment
             // Do something with the date chosen by the user
             TextInputEditText add_task_start_date = getActivity().findViewById(getActivity().getResources().getIdentifier(editTextId, "id", getActivity().getPackageName()));
             Log.i("setdate", editTextId);
-            Log.i("setdate", Integer.toString(year));
-            Log.i("setdate", Integer.toString(month));
-            Log.i("setdate", Integer.toString(day));
+            Log.i("setyear", Integer.toString(year));
+            Log.i("setmonth", Integer.toString(month));
+            Log.i("setday", Integer.toString(day));
+            month=month+1;
             //add_task_start_time.setText("test");
-            add_task_start_date.setText(day+"-"+month+1+"-"+year);
+            add_task_start_date.setText(day+"-"+month+"-"+year);
         }
 
 

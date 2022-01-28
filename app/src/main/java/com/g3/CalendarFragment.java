@@ -21,12 +21,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import sun.bob.mcalendarview.CellConfig;
 import sun.bob.mcalendarview.MarkStyle;
 import sun.bob.mcalendarview.listeners.OnMonthChangeListener;
 import sun.bob.mcalendarview.views.ExpCalendarView;
 import sun.bob.mcalendarview.vo.DateData;
+import sun.bob.mcalendarview.vo.MarkedDates;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +41,7 @@ public class CalendarFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private List marked_dates;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -92,6 +95,7 @@ public class CalendarFragment extends Fragment {
         ExpCalendarView calendarView = ((ExpCalendarView) getActivity().findViewById(R.id.calendar_exp));
 
 
+
         TextView current_view_year=getActivity().findViewById((R.id.current_view_year));
         TextView current_view_month=getActivity().findViewById((R.id.current_view_month));
 
@@ -129,19 +133,26 @@ public class CalendarFragment extends Fragment {
         //expandIV.setImageResource(R.mipmap.icon_arrow_down);
 
         // Lookup the recyclerview in activity layout
-        ArrayList<Task> tasks; //when applied db, just convert it to array here
+
         RecyclerView rv = (RecyclerView) getActivity().findViewById(R.id.recycler);
 
         // Initialize tasks
-        tasks = Task.createTaskList();
+        //tasks = Task.createTaskList();
         // Create adapter passing in the sample task data
-        TaskAdapter adapter = new TaskAdapter(tasks);
+        //TaskAdapter adapter = new TaskAdapter(tasks);
+        TaskAdapter adapter = ((MainActivity)getActivity()).getTaskAdapter();
+        List<Task> tasks=adapter.getTasks();
         // Attach the adapter to the recyclerview to populate items
         rv.setAdapter(adapter);
         // Set layout manager to position the items
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         // That's all!
 
+        MarkedDates markedDates = calendarView.getMarkedDates();
+        ArrayList markData = markedDates.getAll();
+        for (int k=0; k<markData.size();k++){
+            calendarView.unMarkDate((DateData) markData.get(k));
+        }
         for(int j=0; j<tasks.size(); j++){
             Task task=tasks.get(j);
             //String[] datetimeArr=task.getEndDate().split(" ");
@@ -151,6 +162,8 @@ public class CalendarFragment extends Fragment {
             int day=Integer.parseInt(dateArr[0]);
             int month=Integer.parseInt(dateArr[1]);
             int year=Integer.parseInt(dateArr[2]);
+
+
             calendarView.markDate(
                     new DateData(year, month, day).setMarkStyle(new MarkStyle(MarkStyle.BACKGROUND, Color.parseColor(task.getColor())))
             );

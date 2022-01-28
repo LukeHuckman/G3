@@ -2,6 +2,7 @@ package com.g3;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -17,10 +18,27 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
+    TaskAdapter taskAdapter;
+    SettingsDB settingsDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settingsDB = new SettingsDB(this);
+        taskAdapter=new TaskAdapter();
+        try {
+            settingsDB.getSettings(1);
+        } catch(android.database.CursorIndexOutOfBoundsException ex){
+            settingsDB.initSettings();
+        }
+        switch(settingsDB.getSettings(1).getDarkMode()){
+            case 1:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case 0:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+        }
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.TBMainAct);
@@ -64,5 +82,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         return Navigation.findNavController(this, R.id.NHFMain).navigateUp();
+    }
+
+    public TaskAdapter getTaskAdapter(){
+        return taskAdapter;
+    }
+    public SettingsDB getSettingsDB(){
+        return settingsDB;
     }
 }

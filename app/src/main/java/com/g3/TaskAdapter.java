@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
@@ -20,8 +21,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private List<Task> tasks;
 
     // Pass in the contact array into the constructor
-    public TaskAdapter(List<Task> tasks) {
+    /*public TaskAdapter(List<Task> tasks) {
         this.tasks = tasks;
+    }*/
+    public TaskAdapter(){
+        this.tasks=new ArrayList<>();
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -63,6 +67,31 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return tasks.size();
+    }
+
+    public void addTask(Task task){
+        tasks.add(task);
+    }
+
+    public void updateTasks(int id, Task task){
+        for(int i=0; i<tasks.size(); i++){
+            if(tasks.get(i).getId()==id){
+                tasks.set(i, task);
+            }
+        }
+    }
+
+    public Task getTask(int id){
+        for(int i=0; i<tasks.size(); i++){
+            if(tasks.get(i).getId()==id){
+                return tasks.get(i);
+            }
+        }
+        return null;
+    }
+
+    public List<Task> getTasks(){
+        return tasks;
     }
 
     // Provide a direct reference to each of the views within a data item
