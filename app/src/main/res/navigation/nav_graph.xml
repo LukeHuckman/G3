@@ -52,5 +52,10 @@
         android:name="com.g3.StopwatchFragment"
         android:label="Stopwatch"
         tools:layout="@layout/fragment_stopwatch" />
+    <fragment
+        android:id="@+id/timerFragment"
+        android:name="com.g3.TimerFragment"
+        android:label="Timer"
+        tools:layout="@layout/fragment_timer" />
 
 </navigation>

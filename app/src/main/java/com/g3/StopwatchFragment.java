@@ -30,9 +30,6 @@ public class StopwatchFragment extends Fragment {
     int sec, min, msec;
     TextView time;
     Handler handler;
-
-    private boolean running;
-    private boolean wasRunning;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -138,8 +135,8 @@ public class StopwatchFragment extends Fragment {
             }
         });
     }
-    public Runnable runnable = new Runnable() {
 
+    public Runnable runnable = new Runnable() {
         public void run() {
             tick = SystemClock.uptimeMillis() - startTime;
             updateTime = buffer + tick;
@@ -152,6 +149,5 @@ public class StopwatchFragment extends Fragment {
                     + String.format("%03d", msec));
             handler.postDelayed(this, 0);
         }
-
     };
 }

@@ -19,6 +19,12 @@
         android:id="@id/stopwatchFragment"
         android:icon="@drawable/ic_stopwatch"
         android:title="Stopwatch" />
+
+    <item
+        android:id="@id/timerFragment"
+        android:icon="@drawable/ic_timer"
+        android:title="Timer" />
+
     <item
         android:id="@id/settingsFragment"
         android:icon="@drawable/ic_settings"
