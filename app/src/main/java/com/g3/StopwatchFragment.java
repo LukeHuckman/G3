@@ -28,6 +28,7 @@ import java.util.List;
 public class StopwatchFragment extends Fragment {
     long tick, startTime, buffer, updateTime = 0L ;
     int sec, min, msec;
+    boolean running = false;
     TextView time;
     Handler handler;
     // TODO: Rename parameter arguments, choose names that match
@@ -80,7 +81,6 @@ public class StopwatchFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Button start = (Button) view.findViewById(R.id.BtnStart);
-        Button pause = (Button) view.findViewById(R.id.BtnPause);
         Button reset = (Button) view.findViewById(R.id.BtnReset);
         Button lap = (Button) view.findViewById(R.id.BtnLap);
         time = view.findViewById(R.id.SWTime);
@@ -97,19 +97,22 @@ public class StopwatchFragment extends Fragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startTime = SystemClock.uptimeMillis();
-                handler.postDelayed(runnable, 0);
-                reset.setEnabled(false);
+                running = !running;
+                if(running){
+                    start.setText("Stop");
+                    startTime = SystemClock.uptimeMillis();
+                    handler.postDelayed(runnable, 0);
+                    reset.setEnabled(false);
+                }
+                else {
+                    start.setText("Start");
+                    buffer += tick;
+                    handler.removeCallbacks(runnable);
+                    reset.setEnabled(true);
+                }
             }
         });
-        pause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buffer += tick;
-                handler.removeCallbacks(runnable);
-                reset.setEnabled(true);
-            }
-        });
+
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
