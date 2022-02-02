@@ -83,6 +83,8 @@ public class TimerFragment extends Fragment {
         seconds = (EditText) view.findViewById(R.id.timerSeconds);
         startStop = (Button) view.findViewById(R.id.TMStart);
         reset = (Button) view.findViewById(R.id.TMReset);
+        if (timeLeft == 0)
+            reset.setEnabled(false);
         handler = new Handler(Looper.myLooper());
         startStop.setOnClickListener(new View.OnClickListener() {
             @Override
