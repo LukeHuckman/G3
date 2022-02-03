@@ -19,6 +19,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     // Store a member variable for the contacts
     //private List<Task> mContacts;
     private List<Task> tasks;
+    private SettingsDB db;
 
     // Pass in the contact array into the constructor
     /*public TaskAdapter(List<Task> tasks) {
@@ -28,7 +29,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         this.tasks=new ArrayList<>();
     }
     public TaskAdapter(SettingsDB db){
-        this.tasks=db.getTasks();
+        this.db=db;
+        //this.tasks=db.getTasks();
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -38,10 +40,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.task_listview, parent, false);
+        View taskView = inflater.inflate(R.layout.task_listview, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(contactView);
+        ViewHolder viewHolder = new ViewHolder(taskView);
         return viewHolder;
     }
 
@@ -54,7 +56,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         // Set item views based on your views and data model
 
         TextView task_id=holder.task_id;
-        Log.i("task id", "id:"+task.getId());
+
         task_id.setText(Integer.toString(task.getId()));
         TextView task_name=holder.task_name;
         task_name.setText(task.getName());
@@ -100,9 +102,40 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             }
         }
     }
+    //set tasks list to be view in recycler
+    public void setAllTasks(){
+        this.tasks=getAllTasks();
+    }
 
+    //set tasks list to be view in recycler
+    public void setMonthTasks(int month){
+        tasks=getMonthTasks(month);
+        //return tasks;
+    }
+    //get tasks to be viewed in recycler
     public List<Task> getTasks(){
+        //this.tasks=db.getTasks();
         return tasks;
+    }
+    //get task in the month only, no set
+    public List<Task> getMonthTasks(int month){
+        List<Task> tempAllTasks=getAllTasks();
+
+        List<Task> tempTasks=new ArrayList<>();
+        for(int i=0; i<tempAllTasks.size(); i++){
+            String endDate=tempAllTasks.get(i).getEndDate();
+            int taskMonth=Integer.parseInt((endDate.split("-"))[1]);
+            if(taskMonth==month){
+
+                tempTasks.add(tempAllTasks.get(i));
+            }
+        }
+        return tempTasks;
+        //return tasks;
+    }
+    //get all tasks only
+    public List<Task> getAllTasks(){
+        return db.getTasks();
     }
 
     // Provide a direct reference to each of the views within a data item

@@ -102,15 +102,16 @@ public class EditTaskFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.TBMainAct);
         toolbar.setTitle("Edit Task");
+
         if (getArguments() != null) {
             //get task id to get data from db.
             taskId=getArguments().getInt("task_id");
-            Log.i("get", Integer.toString(taskId));
         }
 
         //set data gotten from db
-        TaskAdapter taskAdapter=((MainActivity)getActivity()).getTaskAdapter();
-        Task task=taskAdapter.getTask(taskId);
+        SettingsDB db=((MainActivity)getActivity()).getSettingsDB();
+        Task task=db.getTask(taskId);
+        Log.i("task id", Integer.toString(taskId));
         taskName=task.getName();
         taskTags=task.getTags();
         taskColor=task.getColor();
@@ -151,7 +152,7 @@ public class EditTaskFragment extends Fragment {
                         .setOnColorSelectedListener(new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int selectedColor) {
-                                Log.i("onColorSelected: 0x", Integer.toHexString(selectedColor));
+
                                 edit_task_color.setText("#"+Integer.toHexString(selectedColor));
                                 edit_task_color_view.setBackgroundColor(Color.parseColor("#"+Integer.toHexString(selectedColor)));
                             }
@@ -161,7 +162,7 @@ public class EditTaskFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
                                 //changeBackgroundColor(selectedColor);
                                 //initColor=Integer.toHexString(selectedColor);
-                                Log.i("selectedColor", Integer.toHexString(selectedColor));
+
                             }
                         })
                         .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -317,10 +318,6 @@ public class EditTaskFragment extends Fragment {
                 int day=Integer.parseInt(dateArr[0]);
                 int month=Integer.parseInt(dateArr[1]);
                 int year=Integer.parseInt(dateArr[2]);
-                Log.i("submit", Integer.toString(taskId));
-                Log.i("editday", Integer.toString(day));
-                Log.i("editmonth", Integer.toString(month));
-                Log.i("edityear", Integer.toString(year));
 
                 if (getFragmentManager().getBackStackEntryCount() != 0) {
                     //String item = "Pig";

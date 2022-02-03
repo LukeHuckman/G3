@@ -31,8 +31,8 @@ public class SettingsDB extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TASK_ENTRIES =
             "CREATE TABLE task (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "name TEXT, " +
-                    "color TEXT, " +
                     "tags TEXT, " +
+                    "color TEXT, " +
                     "startDate TEXT, " +
                     "startTime TEXT, " +
                     "endDate TEXT, " +
