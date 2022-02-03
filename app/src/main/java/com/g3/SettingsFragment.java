@@ -1,11 +1,13 @@
 package com.g3;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,6 +102,16 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settings.setTaskNotify(isChecked ? 1:0);
                 settingsDB.updateSettings(1, settings);
+                switch(settingsDB.getSettings(1).getTaskNotify()) {
+                    case 1:
+                        getContext().startService(new Intent(getContext(), TasksCountdownService.class));
+                        Log.i("countdownservice in main", "Started service");
+                        break;
+                    case 0:
+                        getContext().stopService(new Intent(getContext(), TasksCountdownService.class));
+                        Log.i("countdownservice in main", "Stopped service");
+                        break;
+                }
             }
         };
         toggleTSNotify.setOnCheckedChangeListener(TSNotify);

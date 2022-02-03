@@ -11,7 +11,13 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,12 +25,28 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
     TaskAdapter taskAdapter;
-    SettingsDB settingsDB;
+    static SettingsDB settingsDB;
+    private static Context context;
 
+    private BroadcastReceiver br = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateGUI(intent); // or whatever method used to update your GUI fields
+        }
+    };
+
+    private void updateGUI(Intent intent) {
+        if (intent.getExtras() != null) {
+            long millisUntilFinished = intent.getLongExtra("countdown", 0);
+            Log.i("countdownservice in main", "Countdown seconds remaining: " +  millisUntilFinished / 1000);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.context=getApplicationContext();
+
         settingsDB = new SettingsDB(this);
         //this.deleteDatabase("settings.db");
         taskAdapter=new TaskAdapter(settingsDB);
@@ -41,6 +63,18 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 break;
+        }
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        switch(settingsDB.getSettings(1).getTaskNotify()) {
+            case 1:
+                startService(new Intent(this, TasksCountdownService.class));
+                Log.i("countdownservice in main", "Started service");
+                break;
+            case 0:
+                stopService(new Intent(this, TasksCountdownService.class));
+                Log.i("countdownservice in main", "Stopped service");
+                break;
+
         }
 
         setContentView(R.layout.activity_main);
@@ -60,6 +94,36 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         setupNavMenu(navController);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerReceiver(br, new IntentFilter());
+        Log.i("countdownservice in main", "Registered broacast receiver");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(br);
+        Log.i("countdownservice in main", "Unregistered broacast receiver");
+    }
+    @Override
+    public void onStop() {
+        try {
+            unregisterReceiver(br);
+        } catch (Exception e) {
+            // Receiver was probably already stopped in onPause()
+        }
+        super.onStop();
+    }
+    @Override
+    public void onDestroy() {
+        //stopService(new Intent(this, TasksCountdownService.class));
+        //Log.i("countdownservice in main", "Stopped service");
+        super.onDestroy();
     }
 
     @Override
@@ -91,7 +155,13 @@ public class MainActivity extends AppCompatActivity {
     public TaskAdapter getTaskAdapter(){
         return taskAdapter;
     }
-    public SettingsDB getSettingsDB(){
+    public static SettingsDB getSettingsDB(){
         return settingsDB;
+    }
+    //static Context context=MainActivity.context;
+    public static Context getAppContext(){return MainActivity.context;}
+    public void restartTasksCountdownService(){
+        stopService(new Intent(this, TasksCountdownService.class));
+        startService(new Intent(this, TasksCountdownService.class));
     }
 }

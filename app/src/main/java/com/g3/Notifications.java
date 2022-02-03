@@ -5,17 +5,22 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Color;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 public class Notifications extends ContextWrapper{
     private NotificationManager manager;
     public static final String CHANNEL_ID = "com.g3";
     public static final String CHANNEL_NAME = "CHANNEL";
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Notifications(Context base) {
         super(base);
         createChannels();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void createChannels() {
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                 CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
@@ -35,20 +40,19 @@ public class Notifications extends ContextWrapper{
         return manager;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Notification.Builder getAndroidChannelNotification(String title, String body, String topic) {
+        Notification.Builder notification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setAutoCancel(true);
         switch (topic){
             case "timer":
-                return new Notification.Builder(getApplicationContext(), CHANNEL_ID)
-                        .setContentTitle(title)
-                        .setContentText(body)
-                        .setSmallIcon(R.drawable.ic_timer)
-                        .setAutoCancel(true);
+                return notification.setSmallIcon(R.drawable.ic_timer);
+            case "task":
+                return notification.setSmallIcon(R.drawable.ic_tasks);
             default:
-                return new Notification.Builder(getApplicationContext(), CHANNEL_ID)
-                        .setContentTitle(title)
-                        .setContentText(body)
-                        .setSmallIcon(android.R.drawable.stat_notify_more)
-                        .setAutoCancel(true);
+                return notification.setSmallIcon(android.R.drawable.stat_notify_more);
         }
 
 
