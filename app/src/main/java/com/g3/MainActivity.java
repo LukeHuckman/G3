@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -63,6 +64,18 @@ public class MainActivity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 break;
         }
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        switch(settingsDB.getSettings(1).getTaskNotify()) {
+            case 1:
+                startService(new Intent(this, TasksCountdownService.class));
+                Log.i("countdownservice in main", "Started service");
+                break;
+            case 0:
+                stopService(new Intent(this, TasksCountdownService.class));
+                Log.i("countdownservice in main", "Stopped service");
+                break;
+
+        }
 
         setContentView(R.layout.activity_main);
 
@@ -82,8 +95,6 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
         setupNavMenu(navController);
 
-        startService(new Intent(this, TasksCountdownService.class));
-        Log.i("countdownservice in main", "Started service");
     }
 
     @Override
@@ -110,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public void onDestroy() {
-        stopService(new Intent(this, TasksCountdownService.class));
-        Log.i("countdownservice in main", "Stopped service");
+        //stopService(new Intent(this, TasksCountdownService.class));
+        //Log.i("countdownservice in main", "Stopped service");
         super.onDestroy();
     }
 

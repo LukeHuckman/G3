@@ -42,19 +42,17 @@ public class Notifications extends ContextWrapper{
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Notification.Builder getAndroidChannelNotification(String title, String body, String topic) {
+        Notification.Builder notification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setAutoCancel(true);
         switch (topic){
             case "timer":
-                return new Notification.Builder(getApplicationContext(), CHANNEL_ID)
-                        .setContentTitle(title)
-                        .setContentText(body)
-                        .setSmallIcon(R.drawable.ic_timer)
-                        .setAutoCancel(true);
+                return notification.setSmallIcon(R.drawable.ic_timer);
+            case "task":
+                return notification.setSmallIcon(R.drawable.ic_tasks);
             default:
-                return new Notification.Builder(getApplicationContext(), CHANNEL_ID)
-                        .setContentTitle(title)
-                        .setContentText(body)
-                        .setSmallIcon(android.R.drawable.stat_notify_more)
-                        .setAutoCancel(true);
+                return notification.setSmallIcon(android.R.drawable.stat_notify_more);
         }
 
 

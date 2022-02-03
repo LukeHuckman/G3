@@ -60,6 +60,7 @@ public class TasksCountdownService extends Service {
             long currentMillis=current_cal.getTimeInMillis();
 
 
+            int finalI = i;
             CountDownTimer cdt = new CountDownTimer(endMillis-currentMillis, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -76,7 +77,7 @@ public class TasksCountdownService extends Service {
                     Log.i(TAG, "Timer finished");
                     Notifications notifications = new Notifications(MainActivity.getAppContext());
                     Notification.Builder nb = notifications.
-                            getAndroidChannelNotification("Timer", "Times up!", "timer");
+                            getAndroidChannelNotification(tasks.get(finalI).getName(), "Your task is due", "task");
                     notifications.getManager().notify(1, nb.build());
                 }
             };
