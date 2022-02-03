@@ -1,6 +1,7 @@
 package com.g3;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -297,6 +298,7 @@ public class AddTaskFragment extends Fragment {
                 TaskAdapter taskAdapter=((MainActivity)getActivity()).getTaskAdapter();
                 //set data in task list fragment
                 taskAdapter.addTask(task);
+                ((MainActivity)getActivity()).restartTasksCountdownService();
 
                 //Tag[] tags=tags.split(",")
                 //call tag db func to add tag //if exist, add. else, null.

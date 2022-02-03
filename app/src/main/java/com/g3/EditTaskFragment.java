@@ -312,6 +312,7 @@ public class EditTaskFragment extends Fragment {
                 task.editTask(name, tags, color, start_date, start_time, end_date, end_time);
                 settingsDB.updateTask(taskId, task);
                 taskAdapter.updateTasks(taskId, task);
+                ((MainActivity)getActivity()).restartTasksCountdownService();
 
                 String date=end_date;
                 String[] dateArr=date.split("-");

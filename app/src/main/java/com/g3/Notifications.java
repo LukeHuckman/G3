@@ -5,17 +5,22 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Color;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 public class Notifications extends ContextWrapper{
     private NotificationManager manager;
     public static final String CHANNEL_ID = "com.g3";
     public static final String CHANNEL_NAME = "CHANNEL";
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Notifications(Context base) {
         super(base);
         createChannels();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void createChannels() {
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                 CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
@@ -35,6 +40,7 @@ public class Notifications extends ContextWrapper{
         return manager;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Notification.Builder getAndroidChannelNotification(String title, String body, String topic) {
         switch (topic){
             case "timer":
