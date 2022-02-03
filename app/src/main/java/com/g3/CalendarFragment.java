@@ -94,18 +94,12 @@ public class CalendarFragment extends Fragment {
 
         ExpCalendarView calendarView = ((ExpCalendarView) getActivity().findViewById(R.id.calendar_exp));
 
-
-
         TextView current_view_year=getActivity().findViewById((R.id.current_view_year));
         TextView current_view_month=getActivity().findViewById((R.id.current_view_month));
 
         int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int currentDate=Calendar.getInstance().get(Calendar.DATE);
-
-        Log.i("currentMonth", Integer.toString(currentMonth));
-        Log.i("currentYear", Integer.toString(currentYear));
-        Log.i("currentDate", Integer.toString(currentDate));
 
         calendarView.markDate(
                 new DateData(currentYear, currentMonth, currentDate).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.BLUE))
@@ -139,23 +133,17 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-        //expandIV.setImageResource(R.mipmap.icon_arrow_down);
-
         // Lookup the recyclerview in activity layout
 
-        RecyclerView rv = (RecyclerView) getActivity().findViewById(R.id.recycler);
-
-        // Initialize tasks
-        //tasks = Task.createTaskList();
-        // Create adapter passing in the sample task data
-        //TaskAdapter adapter = new TaskAdapter(tasks);
+        RecyclerView rv = (RecyclerView) getActivity().findViewById(R.id.calendar_tasks_recycler);
         TaskAdapter adapter = ((MainActivity)getActivity()).getTaskAdapter();
+        adapter.setMonthTasks(currentMonth);
+
         List<Task> tasks=adapter.getTasks();
         // Attach the adapter to the recyclerview to populate items
         rv.setAdapter(adapter);
         // Set layout manager to position the items
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        // That's all!
 
         MarkedDates markedDates = calendarView.getMarkedDates();
         ArrayList markData = markedDates.getAll();
@@ -166,11 +154,10 @@ public class CalendarFragment extends Fragment {
         calendarView.markDate(
                 new DateData(currentYear, currentMonth, currentDate).setMarkStyle(new MarkStyle(MarkStyle.DOT, Color.BLUE))
         );
-
-        for(int j=0; j<tasks.size(); j++){
-            Task task=tasks.get(j);
-            Log.i("dbtasks", tasks.get(j).toString());
-            //String[] datetimeArr=task.getEndDate().split(" ");
+        //mark all tasks in calendar
+        List<Task> allTasks=adapter.getAllTasks();
+        for(int j=0; j<allTasks.size(); j++){
+            Task task=allTasks.get(j);
             String date=task.getEndDate();
             String time=task.getEndTime();
             String[] dateArr=date.split("-");
@@ -186,27 +173,23 @@ public class CalendarFragment extends Fragment {
         calendarView.setOnMonthChangeListener(new OnMonthChangeListener() {
             @Override
             public void onMonthChange(int year, int month) {
+                adapter.setMonthTasks(month);
+                //List<Task> tasks=adapter.getTasks();
+                rv.setAdapter(adapter);
+                rv.setLayoutManager(new LinearLayoutManager(getContext()));
+
                 current_view_month.setText(months[month-1]);
                 current_view_year.setText(" "+Integer.toString(year));
             }
         });
 
-        RecyclerView recyclerView = getActivity().findViewById(R.id.recycler);
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+        rv.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), rv ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         FragmentManager fm = getFragmentManager();
                         Bundle bundle = new Bundle();
-                        TextView task_id=getActivity().findViewById(R.id.task_id);
-                        bundle.putInt("task_id", Integer.parseInt((String)task_id.getText()));
-                        Log.i("Calendar", ""+task_id.getText());
-
-                        /*Fragment fragment = new EditTaskFragment();
-                        fragment.setArguments(bundle);
-                        fm.beginTransaction()
-                                .replace(view.getId(), fragment)
-                                .commit();*/
-
+                        Task selectedTask=tasks.get(position);
+                        bundle.putInt("task_id", selectedTask.getId());
                         Navigation.findNavController(view).navigate(R.id.editTaskFragment, bundle);
                     }
 
@@ -217,26 +200,13 @@ public class CalendarFragment extends Fragment {
                 })
         );
 
-        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
+        FloatingActionButton fab = getActivity().findViewById(R.id.calendar_add_task_btn);
         fab.setOnClickListener(new View.OnClickListener() {
-            /*@Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }*/
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(view).navigate(R.id.addTaskFragment);
             }
         });
-
-        /*String[] stringArray = {"Android","IPhone","WindowsMobile","Blackberry",
-                "WebOS","Ubuntu","Windows7","Max OS X"};
-        ArrayAdapter adapter=new ArrayAdapter<String>(getContext(), R.layout.task_listview, stringArray);
-
-        ListView listView = (ListView) getActivity().findViewById(R.id.task_list);
-        listView.setAdapter(adapter);*/
-
 
     }
 }

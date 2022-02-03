@@ -139,7 +139,7 @@ public class AddTaskFragment extends Fragment {
                         .setOnColorSelectedListener(new OnColorSelectedListener() {
                             @Override
                             public void onColorSelected(int selectedColor) {
-                                Log.i("onColorSelected: 0x", Integer.toHexString(selectedColor));
+
                                 add_task_color.setText("#"+Integer.toHexString(selectedColor));
                                 add_task_color_view.setBackgroundColor(Color.parseColor("#"+Integer.toHexString(selectedColor)));
                             }
@@ -147,9 +147,7 @@ public class AddTaskFragment extends Fragment {
                         .setPositiveButton("ok", new ColorPickerClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
-                                //changeBackgroundColor(selectedColor);
-                                //initColor=Integer.toHexString(selectedColor);
-                                Log.i("selectedColor", Integer.toHexString(selectedColor));
+                                //Log.i("selectedColor", Integer.toHexString(selectedColor));
                             }
                         })
                         .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -204,6 +202,7 @@ public class AddTaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (getFragmentManager().getBackStackEntryCount() != 0) {
+
                     getFragmentManager().popBackStack();
                 }
             }
@@ -222,9 +221,6 @@ public class AddTaskFragment extends Fragment {
                 String end_date=add_task_end_date.getEditableText().toString();
                 String end_time=add_task_end_time.getEditableText().toString();
 
-                Log.i("submit", name);
-                Log.i("submit", tags);
-                Log.i("submit", color);
                 boolean validate=true;
 
                 if(name.isEmpty()){
@@ -308,7 +304,7 @@ public class AddTaskFragment extends Fragment {
                 if (getFragmentManager().getBackStackEntryCount() != 0) {
                     //String item = "Pig";
                     //int insertIndex = 2;
-
+                    getFragmentManager().getBackStackEntryAt(getFragmentManager().getBackStackEntryCount()-1).getName();
                     getFragmentManager().popBackStack();
                 }
             }

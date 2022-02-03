@@ -8,7 +8,7 @@
     tools:context=".CalendarFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/calendar_add_task_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
@@ -71,12 +71,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
+                android:textSize="15sp"
                 android:layout_weight="1"/>
             <TextView
                 android:id="@+id/current_view_year"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textStart"
+                android:textSize="15sp"
                 android:layout_weight="1"/>
 
             <!--<Button
@@ -159,7 +161,7 @@
             android:src="@android:drawable/arrow_up_float" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
+            android:id="@+id/calendar_tasks_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
