@@ -83,6 +83,8 @@ public class TimerFragment extends Fragment {
         seconds = (EditText) view.findViewById(R.id.timerSeconds);
         startStop = (Button) view.findViewById(R.id.TMStart);
         reset = (Button) view.findViewById(R.id.TMReset);
+        if (timeLeft == 0)
+            reset.setEnabled(false);
         handler = new Handler(Looper.myLooper());
         startStop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,10 +92,16 @@ public class TimerFragment extends Fragment {
                 running = !running;
                 reset.setEnabled(!running);
                 if(!running) {
+                    hours.setEnabled(true);
+                    minutes.setEnabled(true);
+                    seconds.setEnabled(true);
                     handler.removeCallbacks(runnable);
                     startStop.setText("Start");
                 }
                 else {
+                    hours.setEnabled(false);
+                    minutes.setEnabled(false);
+                    seconds.setEnabled(false);
                     timeLeft = Integer.parseInt(hours.getText().toString()) * 3600L
                             + Integer.parseInt(minutes.getText().toString()) * 60L
                             + Integer.parseInt(seconds.getText().toString());
@@ -128,6 +136,9 @@ public class TimerFragment extends Fragment {
                 Notification.Builder nb = notifications.
                         getAndroidChannelNotification("Timer", "Times up!", "timer");
                 notifications.getManager().notify(1, nb.build());
+                hours.setEnabled(true);
+                minutes.setEnabled(true);
+                seconds.setEnabled(true);
                 startStop.setText("Start");
             }
         }
