@@ -1,16 +1,12 @@
 package com.g3;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -89,7 +85,7 @@ public class AddTaskFragment extends Fragment {
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.TBMainAct);
         toolbar.setTitle("Add Task");
 
-        TextInputEditText add_task_name=getActivity().findViewById(R.id.add_task_name);
+        TextInputEditText add_task_name=getActivity().findViewById(R.id.add_activity_name);
         TextInputEditText add_task_tags=getActivity().findViewById(R.id.add_task_tags);
 
         String initColor = "#F56969";
@@ -124,8 +120,8 @@ public class AddTaskFragment extends Fragment {
             currentMinuteStr="0"+currentMinuteStr;
         }
         add_task_start_time.setText(currentHourStr+":"+currentMinuteStr);
-        TextInputEditText add_task_end_date = getActivity().findViewById(R.id.add_task_end_date);
-        TextInputEditText add_task_end_time = getActivity().findViewById(R.id.add_task_end_time);
+        TextInputEditText add_task_end_date = getActivity().findViewById(R.id.add_activity_start_time);
+        TextInputEditText add_task_end_time = getActivity().findViewById(R.id.add_activity_end_time);
 
         //https://github.com/QuadFlask/colorpicker
         add_task_color.setOnClickListener(new View.OnClickListener() {
