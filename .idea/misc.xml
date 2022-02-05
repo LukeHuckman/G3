@@ -3,16 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/User/Documents/sem 7/wix3004-MAD/Group Project/G3 - 3-2-2022/G3/app/src/main/res/drawable/ic_about.xml" value="0.1095" />
-        <entry key="..\:/Users/User/Documents/sem 7/wix3004-MAD/Group Project/G3 - 3-2-2022/G3/app/src/main/res/drawable/ic_adaptive.xml" value="0.1095" />
-        <entry key="..\:/Users/User/Documents/sem 7/wix3004-MAD/Group Project/G3 - 3-2-2022/G3/app/src/main/res/drawable/ic_foreground.xml" value="0.137" />
-        <entry key="..\:/Users/User/Documents/sem 7/wix3004-MAD/Group Project/G3 - 3-2-2022/G3/app/src/main/res/layout/fragment_calendar.xml" value="0.1265625" />
-        <entry key="..\:/Users/User/Documents/sem 7/wix3004-MAD/Group Project/G3 - 3-2-2022/G3/app/src/main/res/layout/fragment_settings.xml" value="0.1265625" />
-        <entry key="..\:/Users/User/Documents/sem 7/wix3004-MAD/Group Project/G3 - 3-2-2022/G3/app/src/main/res/layout/fragment_tasks.xml" value="0.1265625" />
-        <entry key="..\:/Users/User/Documents/sem 7/wix3004-MAD/Group Project/G3 - 3-2-2022/G3/app/src/main/res/layout/task_listview.xml" value="0.1265625" />
-        <entry key="..\:/Users/User/Documents/sem 7/wix3004-MAD/Group Project/G3 - 3-2-2022/G3/app/src/main/res/menu/app_menu.xml" value="0.1265625" />
+        <entry key="..\:/Users/User/Documents/sem 7/wix3004-MAD/Group Project/G3 - 5-2-2022/G3/app/src/main/res/layout/fragment_add_task.xml" value="0.1265625" />
+        <entry key="..\:/Users/User/Documents/sem 7/wix3004-MAD/Group Project/G3 - 5-2-2022/G3/app/src/main/res/layout/fragment_edit_task.xml" value="0.1265625" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

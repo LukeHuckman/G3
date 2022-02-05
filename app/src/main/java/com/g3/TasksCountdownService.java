@@ -31,7 +31,7 @@ public class TasksCountdownService extends Service {
 
     private final static String TAG = "BroadcastService";
 
-    public static final String COUNTDOWN_BR = "your_package_name.countdown_br";
+    public static final String COUNTDOWN_BR = "com.g3.countdown_br";
     Intent bi = new Intent(COUNTDOWN_BR);
 
     //CountDownTimer cdt = null;
@@ -59,6 +59,9 @@ public class TasksCountdownService extends Service {
             long endMillis=endDate_cal.getTimeInMillis();
             long currentMillis=current_cal.getTimeInMillis();
 
+            if(currentMillis>endMillis){
+                continue;
+            }
 
             int finalI = i;
             CountDownTimer cdt = new CountDownTimer(endMillis-currentMillis, 1000) {
@@ -90,9 +93,9 @@ public class TasksCountdownService extends Service {
     @Override
     public void onDestroy() {
 
-        for(CountDownTimer cdt:cdts){
+        /*for(CountDownTimer cdt:cdts){
             cdt.cancel();
-        }
+        }*/
         Log.i(TAG, "Timer cancelled");
         super.onDestroy();
     }

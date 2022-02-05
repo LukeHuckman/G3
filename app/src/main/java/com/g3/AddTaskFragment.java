@@ -89,22 +89,22 @@ public class AddTaskFragment extends Fragment {
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.TBMainAct);
         toolbar.setTitle("Add Task");
 
-        TextInputEditText add_task_name=getActivity().findViewById(R.id.add_task_name);
-        TextInputEditText add_task_tags=getActivity().findViewById(R.id.add_task_tags);
+        TextInputEditText add_task_name=view.findViewById(R.id.add_task_name);
+        TextInputEditText add_task_tags=view.findViewById(R.id.add_task_tags);
 
         String initColor = "#F56969";
-        Button add_task_color_view=getActivity().findViewById(R.id.add_task_color_view);
+        Button add_task_color_view=view.findViewById(R.id.add_task_color_view);
         add_task_color_view.setBackgroundColor(Color.parseColor(initColor));
-        TextInputEditText add_task_color=getActivity().findViewById(R.id.add_task_color);
+        TextInputEditText add_task_color=view.findViewById(R.id.add_task_color);
         add_task_color.setText(initColor);
 
         int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         int currentDay = Calendar.getInstance().get(Calendar.DATE);
-        int currentHour = Calendar.getInstance().get(Calendar.HOUR);
+        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
 
-        TextInputEditText add_task_start_date = getActivity().findViewById(R.id.add_task_start_date);
+        TextInputEditText add_task_start_date = view.findViewById(R.id.add_task_start_date);
         String currentDayStr = Integer.toString(currentDay);
         String currentMonthStr = Integer.toString(currentMonth);
         if(currentDay<10){
@@ -124,8 +124,8 @@ public class AddTaskFragment extends Fragment {
             currentMinuteStr="0"+currentMinuteStr;
         }
         add_task_start_time.setText(currentHourStr+":"+currentMinuteStr);
-        TextInputEditText add_task_end_date = getActivity().findViewById(R.id.add_task_end_date);
-        TextInputEditText add_task_end_time = getActivity().findViewById(R.id.add_task_end_time);
+        TextInputEditText add_task_end_date = view.findViewById(R.id.add_task_end_date);
+        TextInputEditText add_task_end_time = view.findViewById(R.id.add_task_end_time);
 
         //https://github.com/QuadFlask/colorpicker
         add_task_color.setOnClickListener(new View.OnClickListener() {

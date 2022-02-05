@@ -76,11 +76,12 @@ public class TasksFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.TBMainAct);
         toolbar.setTitle("Tasks");
 
         // Lookup the recyclerview in activity layout
-        RecyclerView rv = (RecyclerView) getActivity().findViewById(R.id.tasks_recycler);
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.tasks_recycler);
         // Initialize tasks
         TaskAdapter adapter = ((MainActivity)getActivity()).getTaskAdapter();
         adapter.setAllTasks();

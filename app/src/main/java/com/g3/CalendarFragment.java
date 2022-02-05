@@ -92,10 +92,10 @@ public class CalendarFragment extends Fragment {
 
         String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
-        ExpCalendarView calendarView = ((ExpCalendarView) getActivity().findViewById(R.id.calendar_exp));
+        ExpCalendarView calendarView = ((ExpCalendarView) view.findViewById(R.id.calendar_exp));
 
-        TextView current_view_year=getActivity().findViewById((R.id.current_view_year));
-        TextView current_view_month=getActivity().findViewById((R.id.current_view_month));
+        TextView current_view_year=view.findViewById((R.id.current_view_year));
+        TextView current_view_month=view.findViewById((R.id.current_view_month));
 
         int currentMonth = Calendar.getInstance().get(Calendar.MONTH)+1;
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -112,7 +112,7 @@ public class CalendarFragment extends Fragment {
         CellConfig.Month2WeekPos = CellConfig.middlePosition;
 
 
-        ImageButton trigger_expand_btn = getActivity().findViewById(R.id.trigger_expand_btn);
+        ImageButton trigger_expand_btn = view.findViewById(R.id.trigger_expand_btn);
         trigger_expand_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +135,7 @@ public class CalendarFragment extends Fragment {
 
         // Lookup the recyclerview in activity layout
 
-        RecyclerView rv = (RecyclerView) getActivity().findViewById(R.id.calendar_tasks_recycler);
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.calendar_tasks_recycler);
         TaskAdapter adapter = ((MainActivity)getActivity()).getTaskAdapter();
         adapter.setMonthTasks(currentMonth);
 
@@ -200,7 +200,7 @@ public class CalendarFragment extends Fragment {
                 })
         );
 
-        FloatingActionButton fab = getActivity().findViewById(R.id.calendar_add_task_btn);
+        FloatingActionButton fab = view.findViewById(R.id.calendar_add_task_btn);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
