@@ -66,7 +66,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:hint="Tags"
+            android:hint="Tags (seperate by ',')"
             app:errorEnabled="true">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_task_tags"
