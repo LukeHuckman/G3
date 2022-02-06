@@ -6,25 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".TimetableFragment">
 
-    <TextView
-        android:id="@+id/txtplaceholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="308dp"
-        android:text="Timetable Goes Here"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.g3.TimetableView
+    <!--com.g3.TimetableView
         android:id="@+id/timetable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:header_highlight_type="image"
-        app:header_title="@array/header_title" />
+        app:header_title="@array/header_title" /-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/submit_activity_btn"
