@@ -49,6 +49,18 @@
         tools:layout="@layout/fragment_edit_task" />
 
     <fragment
+        android:id="@+id/addTagFragment"
+        android:name="com.g3.AddTagFragment"
+        android:label="Add Tag"
+        tools:layout="@layout/fragment_add_tag" />
+
+    <fragment
+        android:id="@+id/editTagFragment"
+        android:name="com.g3.EditTagFragment"
+        android:label="Edit Tag"
+        tools:layout="@layout/fragment_edit_tag" />
+
+    <fragment
         android:id="@+id/addTaskFragment"
         android:name="com.g3.AddTaskFragment"
         android:label="fragment_add_task"

@@ -5,12 +5,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -29,6 +35,10 @@ public class TagsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FloatingActionButton fab;
+
+    private RecyclerView recycler;
 
     public TagsFragment() {
         // Required empty public constructor
@@ -85,5 +95,32 @@ public class TagsFragment extends Fragment {
 
         tagsRecyclerView.setAdapter(adapter);
         tagsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        fab = getActivity().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.addTagFragment);
+            }
+        });
+
+        recycler = getActivity().findViewById(R.id.recycler);
+        recycler.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recycler, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                FragmentManager fm = getFragmentManager();
+                Bundle bundle = new Bundle();
+                TextView tag_name = getActivity().findViewById(R.id.tagName);
+                bundle.putString("tag_name", tag_name.getText().toString());
+
+                Navigation.findNavController(view).navigate(R.id.editTagFragment, bundle);
+
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+        }));
     }
 }

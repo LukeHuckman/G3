@@ -6,13 +6,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RestrictTo;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TagRecViewAdapter extends  RecyclerView.Adapter<TagRecViewAdapter.ViewHolder>{
 
-    public ArrayList<Tag> tags = new ArrayList<Tag>();
+    public List<Tag> tags;
+    private SettingsDB db;
+
+    public TagRecViewAdapter(SettingsDB db) {
+        this.db = db;
+    }
+
+    public TagRecViewAdapter() {
+    }
 
     @NonNull
     @Override
@@ -38,6 +48,39 @@ public class TagRecViewAdapter extends  RecyclerView.Adapter<TagRecViewAdapter.V
 
     public void setTags(ArrayList<Tag> tags) {
         this.tags = tags;
+    }
+
+    private List<Tag> getAllTags() {
+        return db.getTags();
+    }
+
+    public void addTag(Tag tag){
+        this.tags.add(tag);
+    }
+
+    public void updateTag(int id,Tag tag){
+        for (int i = 0; i < tags.size(); i++) {
+            if (tags.get(i).getId()==id){
+                tags.set(id,tag);
+            }
+        }
+    }
+
+    public Tag getTag(int id){
+        for (int i = 0; i < tags.size(); i++) {
+            if (tags.get(i).getId()==id){
+                return tags.get(id);
+            }
+        }
+        return null;
+    }
+
+    public void deleteTag(int id){
+        for (int i = 0; i < tags.size(); i++) {
+            if (tags.get(i).getId()==id){
+                tags.remove(id);
+            }
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
