@@ -84,17 +84,6 @@ public class SettingsFragment extends Fragment {
         };
         toggleTTNotify.setOnCheckedChangeListener(TTNotify);
 
-        SwitchMaterial toggleTTAlarm = view.findViewById(R.id.ToggleTTAlarm);
-        toggleTTAlarm.setChecked(settings.getTimeAlarm() == 1);
-        SwitchMaterial.OnCheckedChangeListener TTAlarm = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                settings.setTimeAlarm(isChecked ? 1:0);
-                settingsDB.updateSettings(1, settings);
-            }
-        };
-        toggleTTAlarm.setOnCheckedChangeListener(TTAlarm);
-
         SwitchMaterial toggleTSNotify = view.findViewById(R.id.ToggleTSNotify);
         toggleTSNotify.setChecked(settings.getTaskNotify() == 1);
         SwitchMaterial.OnCheckedChangeListener TSNotify = new CompoundButton.OnCheckedChangeListener() {
@@ -115,17 +104,6 @@ public class SettingsFragment extends Fragment {
             }
         };
         toggleTSNotify.setOnCheckedChangeListener(TSNotify);
-
-        SwitchMaterial toggleTSAlarm = view.findViewById(R.id.ToggleTSAlarm);
-        toggleTSAlarm.setChecked(settings.getTaskAlarm() == 1);
-        SwitchMaterial.OnCheckedChangeListener TSAlarm = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                settings.setTaskAlarm(isChecked ? 1:0);
-                settingsDB.updateSettings(1, settings);
-            }
-        };
-        toggleTSAlarm.setOnCheckedChangeListener(TSAlarm);
 
         SwitchMaterial toggleDarkMode = view.findViewById(R.id.ToggleDarkMode);
         toggleDarkMode.setChecked(settings.getDarkMode() == 1);

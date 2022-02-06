@@ -23,9 +23,7 @@ public class SettingsDB extends SQLiteOpenHelper {
             "CREATE TABLE " + AppSettings.TABLE_NAME + " (" +
                     AppSettings.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     AppSettings.COLUMN_TIME_NOTIFY + " INTEGER," +
-                    AppSettings.COLUMN_TIME_ALARM + " INTEGER," +
                     AppSettings.COLUMN_TASK_NOTIFY + " INTEGER," +
-                    AppSettings.COLUMN_TASK_ALARM + " INTEGER," +
                     AppSettings.COLUMN_DARK_MODE + " INTEGER)";
 
     private static final String SQL_CREATE_TASK_ENTRIES =
@@ -73,10 +71,8 @@ public class SettingsDB extends SQLiteOpenHelper {
         UserSettings userSettings = new UserSettings();
         userSettings.setID(cursor.getInt(0));
         userSettings.setTimeNotify(cursor.getInt(1));
-        userSettings.setTimeAlarm(cursor.getInt(2));
-        userSettings.setTaskNotify(cursor.getInt(3));
-        userSettings.setTaskAlarm(cursor.getInt(4));
-        userSettings.setDarkMode(cursor.getInt(5));
+        userSettings.setTaskNotify(cursor.getInt(2));
+        userSettings.setDarkMode(cursor.getInt(3));
         return userSettings;
     }
 
@@ -123,9 +119,7 @@ public class SettingsDB extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(AppSettings.COLUMN_ID, 1);
         values.put(AppSettings.COLUMN_TIME_NOTIFY, 0);
-        values.put(AppSettings.COLUMN_TIME_ALARM, 0);
         values.put(AppSettings.COLUMN_TASK_NOTIFY, 0);
-        values.put(AppSettings.COLUMN_TASK_ALARM, 0);
         values.put(AppSettings.COLUMN_DARK_MODE, 0);
 
         SQLiteDatabase database = this.getWritableDatabase();
@@ -136,9 +130,7 @@ public class SettingsDB extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(AppSettings.COLUMN_TIME_NOTIFY, userSettings.getTimeNotify());
-        values.put(AppSettings.COLUMN_TIME_ALARM, userSettings.getTimeAlarm());
         values.put(AppSettings.COLUMN_TASK_NOTIFY, userSettings.getTaskNotify());
-        values.put(AppSettings.COLUMN_TASK_ALARM, userSettings.getTaskAlarm());
         values.put(AppSettings.COLUMN_DARK_MODE, userSettings.getDarkMode());
         database.update(AppSettings.TABLE_NAME, values, AppSettings.COLUMN_ID + " = ? " ,
                 new String[]{String.valueOf(id)});
