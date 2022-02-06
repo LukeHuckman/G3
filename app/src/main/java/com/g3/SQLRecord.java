@@ -20,9 +20,7 @@ public class SQLRecord {
 class UserSettings extends SQLRecord {
     private int
         timeNotify,
-        timeAlarm,
         taskNotify,
-        taskAlarm,
         darkMode;
 
     public int getTimeNotify() {
@@ -32,25 +30,11 @@ class UserSettings extends SQLRecord {
         this.timeNotify = timeNotify;
     }
 
-    public int getTimeAlarm() {
-        return timeAlarm;
-    }
-    public void setTimeAlarm(int timeAlarm) {
-        this.timeAlarm = timeAlarm;
-    }
-
     public int getTaskNotify() {
         return taskNotify;
     }
     public void setTaskNotify(int taskNotify) {
         this.taskNotify = taskNotify;
-    }
-
-    public int getTaskAlarm() {
-        return taskAlarm;
-    }
-    public void setTaskAlarm(int taskAlarm) {
-        this.taskAlarm = taskAlarm;
     }
 
     public int getDarkMode() {
@@ -64,18 +48,14 @@ class UserSettings extends SQLRecord {
     public String toString() {
         return SQLTables.AppSettings.COLUMN_ID + ":" + this.id + "," +
                 SQLTables.AppSettings.COLUMN_TIME_NOTIFY + ":" + this.timeNotify + "," +
-                SQLTables.AppSettings.COLUMN_TIME_ALARM + ":" + this.timeAlarm + "," +
                 SQLTables.AppSettings.COLUMN_TASK_NOTIFY + ":" + this.taskNotify + "," +
-                SQLTables.AppSettings.COLUMN_TASK_ALARM + ":" + this.taskAlarm + "," +
                 SQLTables.AppSettings.COLUMN_DARK_MODE + ":" + this.darkMode;
     }
 
     public String[] toStringArray() {
         return new String[]{SQLTables.AppSettings.COLUMN_ID,
                 SQLTables.AppSettings.COLUMN_TIME_NOTIFY,
-                SQLTables.AppSettings.COLUMN_TIME_ALARM,
                 SQLTables.AppSettings.COLUMN_TASK_NOTIFY,
-                SQLTables.AppSettings.COLUMN_TASK_ALARM,
                 SQLTables.AppSettings.COLUMN_DARK_MODE};
     }
 
