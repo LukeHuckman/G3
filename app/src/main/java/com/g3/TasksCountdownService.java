@@ -43,7 +43,7 @@ public class TasksCountdownService extends Service {
 
         Log.i(TAG, "Starting timer...");
         List<Task> tasks=settingsDB.getTasks();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         Date currentDateTime= Calendar.getInstance().getTime();
         for(int i=0; i<tasks.size(); i++) {
             Date endDateTime = null;
