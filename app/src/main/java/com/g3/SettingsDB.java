@@ -37,7 +37,7 @@ public class SettingsDB extends SQLiteOpenHelper {
                     "endTime TEXT)";
 
     private static final String SQL_CREATE_TAG_ENTRIES =
-            "CREATE TABLE task (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "CREATE TABLE tag (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "name TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
