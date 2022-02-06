@@ -9,9 +9,6 @@ package com.g3;
 public class SQLRecord {
     protected int id;
 
-    public int getID() {
-        return id;
-    }
     public void setID(int id) {
         this.id = id;
     }
@@ -50,13 +47,6 @@ class UserSettings extends SQLRecord {
                 SQLTables.AppSettings.COLUMN_TIME_NOTIFY + ":" + this.timeNotify + "," +
                 SQLTables.AppSettings.COLUMN_TASK_NOTIFY + ":" + this.taskNotify + "," +
                 SQLTables.AppSettings.COLUMN_DARK_MODE + ":" + this.darkMode;
-    }
-
-    public String[] toStringArray() {
-        return new String[]{SQLTables.AppSettings.COLUMN_ID,
-                SQLTables.AppSettings.COLUMN_TIME_NOTIFY,
-                SQLTables.AppSettings.COLUMN_TASK_NOTIFY,
-                SQLTables.AppSettings.COLUMN_DARK_MODE};
     }
 
 }
