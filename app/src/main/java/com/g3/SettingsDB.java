@@ -36,11 +36,18 @@ public class SettingsDB extends SQLiteOpenHelper {
                     "endDate TEXT, " +
                     "endTime TEXT)";
 
+    private static final String SQL_CREATE_TAG_ENTRIES =
+            "CREATE TABLE task (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "name TEXT)";
+
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + AppSettings.TABLE_NAME;
 
     private static final String SQL_DELETE_TASK_ENTRIES =
             "DROP TABLE IF EXISTS task";
+
+    private static final String SQL_DELETE_TAG_ENTRIES =
+            "DROP TABLE IF EXISTS tag";
 
     public SettingsDB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -50,12 +57,14 @@ public class SettingsDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
         db.execSQL(SQL_CREATE_TASK_ENTRIES);
+        db.execSQL(SQL_CREATE_TAG_ENTRIES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_ENTRIES);
         db.execSQL(SQL_DELETE_TASK_ENTRIES);
+        db.execSQL(SQL_DELETE_TAG_ENTRIES);
         onCreate(db);
     }
 
@@ -92,6 +101,16 @@ public class SettingsDB extends SQLiteOpenHelper {
         return task;
     }
 
+    public Tag getTag(int i){
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select * from tag where id="+i, null);
+        cursor.moveToFirst();
+        Tag tag = new Tag();
+        tag.setId(cursor.getInt(0));
+        tag.setName(cursor.getString(1));
+        return tag;
+    }
+
     public List<Task> getTasks(){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.rawQuery("select * from task", null);
@@ -113,6 +132,23 @@ public class SettingsDB extends SQLiteOpenHelper {
         }
         cursor.close();
         return tasks;
+    }
+
+    public ArrayList<Tag> getTags(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select * from task", null);
+        ArrayList<Tag> tags=new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            while (cursor.moveToNext()) {
+                Tag temp = new Tag(
+                        cursor.getInt(0),
+                        cursor.getString(1)
+                        );
+                tags.add(temp);
+            }
+        }
+        cursor.close();
+        return tags;
     }
 
     public void initSettings() { // Only called during first-time run
@@ -150,6 +186,14 @@ public class SettingsDB extends SQLiteOpenHelper {
         database.insert("task", null, values);
     }
 
+    public void addTag(Tag tag) {
+        Log.i("addTag", SQL_CREATE_TAG_ENTRIES);
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", tag.getName());
+        database.insert("tag", null, values);
+    }
+
     public void updateTask(int id, Task task) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -165,9 +209,24 @@ public class SettingsDB extends SQLiteOpenHelper {
                 new String[]{String.valueOf(id)});
     }
 
+    public void updateTag(int id, Tag tag) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", tag.getName());
+
+        database.update("tag", values, "id = ? " ,
+                new String[]{String.valueOf(id)});
+    }
+
     public void deleteTask(int id) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         database.delete("task", "id = ? ", new String[]{String.valueOf(id)});
+    }
+
+    public void deleteTag(int id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        database.delete("tag", "id = ? ", new String[]{String.valueOf(id)});
     }
 }

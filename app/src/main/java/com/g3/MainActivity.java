@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     TaskAdapter taskAdapter;
+    TagRecViewAdapter tagAdapter;
     static SettingsDB settingsDB;
     private static Context context;
 
@@ -160,6 +161,9 @@ public class MainActivity extends AppCompatActivity {
 
     public TaskAdapter getTaskAdapter(){
         return taskAdapter;
+    }
+    public TagRecViewAdapter getTagAdapter(){
+        return tagAdapter;
     }
     public static SettingsDB getSettingsDB(){
         return settingsDB;

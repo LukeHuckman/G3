@@ -41,11 +41,11 @@
         android:label="fragment_edit_task"
         tools:layout="@layout/fragment_edit_task" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/addTagFragment"-->
-<!--        android:name="com.g3.AddTagFragment"-->
-<!--        android:label="Add Tag"-->
-<!--        tools:layout="@layout/fragment_add_tag" />-->
+    <fragment
+        android:id="@+id/addTagFragment"
+        android:name="com.g3.AddTagFragment"
+        android:label="Add Tag"
+        tools:layout="@layout/fragment_add_tag" />
 
     <fragment
         android:id="@+id/editTagFragment"

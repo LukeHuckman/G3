@@ -19,7 +19,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     // Store a member variable for the contacts
     //private List<Task> mContacts;
     private List<Task> tasks;
-    private SettingsDB db;
+        private SettingsDB db;
 
     // Pass in the contact array into the constructor
     /*public TaskAdapter(List<Task> tasks) {
@@ -89,7 +89,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public Task getTask(int id){
         for(int i=0; i<tasks.size(); i++){
             if(tasks.get(i).getId()==id){
-                return tasks.get(i);
+                return tasks.get(id);
             }
         }
         return null;
@@ -98,7 +98,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public void deleteTask(int id){
         for(int i=0; i<tasks.size(); i++){
             if(tasks.get(i).getId()==id){
-                tasks.remove(i);
+                tasks.remove(id);
             }
         }
     }
