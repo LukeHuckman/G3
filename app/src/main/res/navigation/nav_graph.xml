@@ -33,7 +33,14 @@
         android:id="@+id/calendarFragment"
         android:name="com.g3.CalendarFragment"
         android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/editTaskFragment"
