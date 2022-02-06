@@ -23,8 +23,7 @@ import android.widget.EditText;
  * create an instance of this fragment.
  */
 public class TimerFragment extends Fragment {
-    long tick, timeLeft, buffer, updateTime = 0L ;
-    int hour, min, sec;
+    long timeLeft;
     EditText hours, minutes, seconds;
     Button startStop, reset;
     Handler handler;
